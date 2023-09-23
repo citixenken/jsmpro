@@ -3,6 +3,9 @@ import Filters from "@/components/Filters";
 import { getResources } from "@/sanity/actions";
 import ResourceCard from "@/components/ResourceCard";
 
+// refresh page every 15 mins -> get latest resources from Sanity
+export const revalidate = 900;
+
 const Page = async () => {
   const resources = await getResources({ query: "", category: "", page: "1" });
 
@@ -30,6 +33,9 @@ const Page = async () => {
                 key={resource._id}
                 id={resource._id}
                 title={resource.title}
+                image={resource.image}
+                downloadNumber={resource.views}
+                downloadLink={resource.downloadLink}
               />
             ))
           ) : (
