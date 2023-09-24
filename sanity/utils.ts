@@ -1,9 +1,16 @@
+import qs from "query-string";
 interface BuildQueryParams {
   type: string;
   query: string;
   category: string;
   page: number;
   perPage?: number;
+}
+
+interface UrlQueryParams {
+  params: string;
+  key: string;
+  value: string | null;
 }
 
 export function buildQuery(params: BuildQueryParams) {
@@ -28,4 +35,13 @@ export function buildQuery(params: BuildQueryParams) {
         .slice(1)
         .join(" && ")})][${offset}...${limit}]`
     : `${conditions[0]}][${offset}...${limit}]`;
+}
+
+// not Sanity related
+export function formUrlQuery({ params, key, value }: UrlQueryParams) {
+  const currentUrl = qs.parse(params);
+
+  currentUrl[key] = value;
+
+  return qs.stringifyUrl({ url: window.location.pathname, query: currentUrl });
 }
