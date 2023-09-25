@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "JS Mastery",
   description: "JS Mastery Resources",
   other: {
-    "theme-color": "0d1117",
+    "theme-color": "#0d1117",
     "color-scheme": "dark only",
     "twitter:image": "https://i.ibb.co/d6TXxB2/homepage-thumbnail.jpg",
     "twitter:card": "summary_large_image",
@@ -26,5 +26,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-// this layout mostly used for SEO stuff etc...
