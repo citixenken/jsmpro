@@ -1,6 +1,6 @@
 import SearchForm from "@/components/SearchForm";
 import Filters from "@/components/Filters";
-import { getResources } from "@/sanity/actions";
+import { getResources, getResourcesPlaylist } from "@/sanity/actions";
 import ResourceCard from "@/components/ResourceCard";
 import Header from "@/components/Header";
 
@@ -17,8 +17,10 @@ const Page = async ({ searchParams }: Props) => {
     category: searchParams?.category || "",
     page: "1",
   });
+  const resourcesPlaylist = await getResourcesPlaylist();
 
-  console.log(resources);
+  // console.log(resources);
+  console.log(resourcesPlaylist);
   // console.log(searchParams);
 
   return (
@@ -37,7 +39,6 @@ const Page = async ({ searchParams }: Props) => {
       {(searchParams?.query || searchParams?.category) && (
         <section className="flex-center mt-6 w-full flex-col sm:mt-20">
           <Header
-            title="Resources"
             query={searchParams?.query || ""}
             category={searchParams?.category || ""}
           />
@@ -59,6 +60,28 @@ const Page = async ({ searchParams }: Props) => {
           </div>
         </section>
       )}
+
+      {/* default Most Popular content */}
+      {resourcesPlaylist.map((item: any) => (
+        <section
+          key={item._id}
+          className="flex-center mt-6 w-full flex-col sm:mt-20"
+        >
+          <h1 className="heading3 self-start text-white-800 ">{item.title}</h1>
+          <div className="mt-12 flex w-full flex-wrap justify-cenetr gap-16 sm:justify-start">
+            {item.resources.map((resource: any) => (
+              <ResourceCard
+                key={resource._id}
+                id={resource._id}
+                title={resource.title}
+                image={resource.image}
+                downloadNumber={resource.views}
+                downloadLink={resource.downloadLink}
+              />
+            ))}
+          </div>
+        </section>
+      ))}
     </main>
   );
 };
